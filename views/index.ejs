@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/styles.css" />
+  <link rel="stylesheet" type="text/css" href="/skeleton.css" />
+  <link rel="stylesheet" type="text/css" href="/normalize.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <title>TODO list</title>
+</head>
+
+<body>
+  <div class="background">
+    <p class="top-text">Select one todo at a time.</p>
+    <div class="container">
+      <div class="todoContainer">
+
+        <h1>Todo List:</h1>
+        <!-- Form for checking off todos -->
+        <form class="newTodoForm" action="/submit" method="POST">
+          <div class="input">
+            <!-- enter todo -->
+            <input type="text" placeholder="Enter your todo" name="newTodo" class="input-field" autofocus />
+            <!-- submit new todo -->
+            <button class="enterNewTodoBtn" type="submit"><img src="/images/enter.svg" class="submitIcon" /></button>
+            <!-- complete a todo -->
+          </div>
+
+          <ul class="listOfTodos">
+            <!-- actual todos -->
+            <% if (locals.newTodo){ %>
+            <% newTodo.forEach((todo) => { %>
+            <li class="todo"><input type="checkbox" name="todo" value="<%= todo %>"><%= todo %></input></li>
+            <% }) %>
+            <% }%>
+          </ul>
+          <div class="buttons">
+            <button class="deleteBtn" name="deleting" type="submit" formaction="/delete_todo" formmethod="POST"><img src="/images/delete.svg" class="deleteIcon" />Delete</button>
+            <button class="completeTodoBtn" formaction="/complete" type="submit"><img src="/images/complete.svg" class="completeIcon" />Complete</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="workTodoContainer">
+        <h1>Work Todo List:</h1>
+        <form class="workTodoForm" action="/work_submit" method="POST">
+          <div class="input">
+            <!-- enter todo -->
+            <input type="text" placeholder="Enter your work related todo" name="workTodo" class="input-field" autofocus />
+            <!-- submit new todo -->
+            <button class="enterNewTodoBtn" type="submit"><img src="/images/enter.svg" class="submitIcon" /></button>
+            <!-- complete a todo -->
+          </div>
+          <ul class="listOfWorkTodos">
+            <!-- Work actual todos -->
+            <% if (locals.workTodoList){ %>
+            <% workTodoList.forEach((workTodoIndividual) => { %>
+            <li class="todo"><input type="checkbox" name="workTodo" value="<%= workTodoIndividual %>"><%= workTodoIndividual %></input></li>
+            <% }) %>
+            <% }%>
+          </ul>
+          <div class="buttons">
+            <button name="delete" class="deleteBtn" type="submit" formaction="/delete_work_todo" formmethod="POST"><img src="/images/delete.svg" class="deleteIcon" />Delete</button>
+            <button class="completeTodoBtn" formaction="/complete_work_todo" type="submit"><img src="/images/complete.svg" class="completeIcon" />Complete</button>
+          </div>
+        </form>
+      </div>
+      <div class="completedContainer">
+        <h1>Completed:</h1>
+        <form class="completedForm" action="/clear" method="POST">
+          <ul class="listOfCompletedTodos"></ul>
+          <!-- completed todos -->
+          <% if (locals.completedList){ %>
+          <% completedList.forEach((completedToDo) => { %>
+          <li class="todo completedTodo">
+            <input type="checkbox" name="completed" value="<%= completedToDo %>" checked><%= completedToDo %></input>
+          </li>
+          <% }) %>
+          <% }%>
+          </ul>
+          <div class="buttons">
+            <!-- clear out completed todos -->
+            <button class="clearBtn" type="submit"><img src="/images/clear-all.svg" class="clearIcon" />Clear All</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="/js/frontend.js"></script>
+</body>
+
+</html>
